@@ -1,0 +1,5 @@
+name = ToDoList
+description = A todo list manager with a focus on today
+core = 7.x
+package = Features
+features[features_api][] = api:2
