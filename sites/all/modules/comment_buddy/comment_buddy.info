@@ -1,0 +1,5 @@
+name = Comment_Buddy
+description = A success message upon comment submission
+package = My First Modules
+core = 7.x
+files[] = comment_buddy.module
