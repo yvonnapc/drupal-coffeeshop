@@ -1,0 +1,19 @@
+<?php
+function hello_user_menu(){
+    $items = array();
+    $items['account_success'] = array(
+        'title' => "Success!",
+        'page callback' => 'account_created',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function account_created(){
+    return "<h1>New User Account Created</h1>";
+}
+
+function hello_user_user_insert(){
+    $_GET['destination'] = 'account_success';
+}
