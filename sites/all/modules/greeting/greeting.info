@@ -1,0 +1,5 @@
+name = Greeting
+description = A module to greet site users
+package = My First Modules
+core = 7.x
+files[] = greeting.module
