@@ -1,0 +1,18 @@
+<?php
+
+function title_case_menu(){
+  $items['title_case'] = array(
+        'title' => 'Title Case',
+        'type' => MENU_NORMAL_ITEM,
+        'access callback' => TRUE,
+        'page callback' => 'drupal_get_form',
+        'page arguments' => $array('title_case_form')
+  );
+  $items['success'] = array(
+        'title' => 'Success',
+        'type' => MENU_CALLBACK,
+        'page callback' => 'title_case_success',
+        'access callback' => TRUE,
+  );
+  return $items;
+}

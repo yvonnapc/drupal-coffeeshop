@@ -1,0 +1,5 @@
+name = Title Case
+description = A module that will return input with capitalized letters
+package = My First Modules
+core = 7.x
+files[] = title_case.module
