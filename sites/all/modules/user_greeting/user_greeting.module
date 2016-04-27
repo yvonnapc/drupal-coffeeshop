@@ -1,0 +1,70 @@
+<?php
+
+global $users;
+$users = array(
+    'authenticated' => 'authenticated',
+    'moderator' => 'moderator',
+    'administrator' => 'administrator',
+    );
+
+function user_greeting_menu(){
+      $items = array();
+      global $users;
+      foreach($users as $key => $user){
+      $items['hello_' . $user] = array(
+        'title' => 'Hello There ' . $key,
+        'page callback' => 'say_hello',
+        'page arguments' => array($key),
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+      );
+      $items['farewell_' . $user] = array(
+        'title' => 'Goodbye There ' . $key,
+        'page callback' => 'say_farewell',
+        'page arguments' => array($key),
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+      );
+    }
+  return $items;
+}
+
+function say_hello($user){
+    if($user == 'administrator'){
+        return "<h1>Administrator User Logged In</h1>";
+    } elseif ($user == 'moderator'){
+        return '<h1>Moderator Logged In</h1>';
+    } else {
+        return '<h1>Authenticated User Logged In </h1>';
+    }
+}
+
+function say_farewell($user) {
+    if($user == 'administrator'){
+        return "<h1>Goodbye Administrator</h1>";
+    } elseif($user == 'moderator'){
+        return "<h1>Goodbye Moderator</h1>";
+    } else {
+        return '<h1>Goodbye Authenticated User </h1>';
+    }
+}
+
+function user_greeting_user_login(&$edit, $account){
+    if(in_array('administrator', $account->roles)) {
+        $_GET['destination'] = 'hello_administrator';
+    } elseif(in_array('moderator', $account->roles)) {
+        $_GET['destination'] = 'hello_moderator';
+    } else {
+        $_GET['destination'] = 'hello_authenticated';
+    }
+}
+
+function user_greeting_user_logout($account){
+    if(in_array('administrator', $account->roles)) {
+        $_GET['destination'] = 'farewell_administrator';
+    } elseif(in_array('moderator', $account->roles)) {
+        $_GET['destination'] = 'farewell_moderator';
+    } else {
+        $_GET['destination'] = 'farewell_authenticated';
+    }
+}
