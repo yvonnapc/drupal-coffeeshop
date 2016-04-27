@@ -22,11 +22,14 @@ function clock_angle_form(){
         '#title' => 'Hour',
         '#type' => 'textfield',
         '#description' => t('Enter an hour'),
+        '#element_validate' => array('element_validate_integer_positive'),
+        '#required' => TRUE,
     );
     $form['minute'] = array(
         '#title' => 'Minute',
         '#type' => 'textfield',
         '#description' => t('Enter a minute'),
+        '#required' => TRUE,
     );
     $form['submit'] = array(
         '#type' => 'submit',
@@ -39,11 +42,16 @@ function clock_angle_form_submit($form, &$form_state){
     $hour = $form_state['values']['hour'];
     $minute = $form_state['values']['minute'];
 
-    $angle_hour = ((60*$hour)+$minute)/2;
-    $angle_minute = (6*$minute);
-    $final_angle = abs($angle_hour - $angle_minute);
+    // $angle_hour = ((60*$hour)+$minute)/2;
+    // $angle_minute = (6*$minute);
+    // $final_angle = abs($angle_hour - $angle_minute);
 
-    $_SESSION['clock_angle_output'] = $final_angle;
+    $difference = abs(0.5 * ((60 * $hour) - (11 * $minute)));
+    if($difference > 180){
+      $difference = 360-$difference;
+    }
+
+    $_SESSION['clock_angle_output'] = $difference;
     $form_state['redirect'] = 'clock_angle_success_page';
 }
 
