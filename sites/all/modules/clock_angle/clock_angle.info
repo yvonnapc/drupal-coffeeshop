@@ -1,0 +1,5 @@
+name = Clock Angle
+description = Calculate the distance between dial hands for a given time.
+package = My First Modules
+core = 7.x
+files[] = clock_angle.module
