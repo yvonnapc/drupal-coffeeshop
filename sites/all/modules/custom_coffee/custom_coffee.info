@@ -1,0 +1,5 @@
+name = Custom coffee
+description = Simplified coffee import form for Cameron
+package = Epicodus Examples
+core = 7.x
+files[] = custom_coffee.module

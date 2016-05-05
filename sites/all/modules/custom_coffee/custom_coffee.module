@@ -1,0 +1,19 @@
+<?php
+
+function custom_coffee_form_alter(&$form, &$form_state, $form_id) {
+  if($form_id === "coffee_import_node_form") {
+    $form['additional_settings']['#type'] = 'hidden';
+    $form['revision_information']['#type'] = 'hidden';
+    $form['author']['#type'] = 'hidden';
+    $form['comment_settings']['#type'] = 'hidden';
+    $form['options']['#access'] = 0;
+    $form['path-form']['#type'] = 'hidden';
+    $form['#after_build'][] = 'custom_after_build';
+  }
+}
+
+function custom_after_build($form, &$form_state) {
+  $form['path']['#access'] = FALSE;
+  $form['menu']['#access'] = FALSE;
+  return ($form);
+}
