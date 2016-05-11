@@ -1,0 +1,57 @@
+<?php
+
+function ajax_link_menu(){
+  $items = array();
+    $items['ajax-test'] = array(
+        'title' => 'Ajax test',
+        'type' => MENU_NORMAL_ITEM,
+        'page callback' => 'ajax_link_page',
+        'access arguments' => array('access content'),
+    );
+    $items['my-ajax-test/%'] = array(
+        'title' => 'Ajax Test Callback',
+        'type' => MENU_CALLBACK,
+        'page callback' => 'ajax_link_callback',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+    );
+    return $items;
+}
+
+function ajax_link_page(){
+  return array(
+    '#type' => 'link',
+    '#title' => t('Ajax Link'),
+    '#href' => 'my-ajax-test/nojs',
+    '#prefix' => '<div id="ajax-link">',
+    '#suffix' => '</div><div id="ajax-display"></div>',
+    '#ajax' => array(
+      'effect' => 'fade',
+    ),
+  );
+}
+
+function ajax_link_callback($ajax){
+  $time = t('The current time is: !time', array('!time' => date('Y-m-d H:i:s')));
+
+  if($ajax == 'ajax') {
+    $commands = array();
+
+    //Ajax command to replace the #ajax-display element with the current time
+    $commands[] = ajax_command_replace('#ajax-display', "<div id='ajax-display'>" . $time . "</div>");
+
+    //Add a visual "change" marker to the '#ajax-display' element
+    $commands[] = ajax_command_changed('#ajax-display');
+
+    //Trigger our ajax_link jQuery plugin
+    $commands[] = ajax_command_invoke(NULL, "ajax_link");
+
+    ajax_deliver(array('#type' => 'ajax', '#commands' => $commands));
+  }
+  else {
+    //If no Ajax, just display the time on the page using renderable array.
+    return array(
+      '#markup' => $time,
+    );
+  }
+}

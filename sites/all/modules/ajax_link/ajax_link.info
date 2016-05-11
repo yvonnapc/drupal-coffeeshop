@@ -1,0 +1,5 @@
+name = Ajax Link Module
+description = A module that uses Ajax to give the current time
+package = Epicodus Examples
+core = 7.x
+scripts[] = ajax_link.js
